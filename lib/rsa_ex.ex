@@ -94,7 +94,7 @@ defmodule RsaEx do
   def encrypt(message, public_key) do
     {:ok, pub_key} = loads(public_key)
     {:ok, pub_key_seq} = RsaEx.RSAPublicKey.as_sequence(pub_key)
-    {:ok, :public_key.encrypt_public(message, pub_key_seq)} |> url_encode64
+    {:ok, :public_key.encrypt_public(message, pub_key_seq)} |> encode64
   end
 
   @doc """
@@ -104,7 +104,7 @@ defmodule RsaEx do
   """
   @spec decrypt(String.t, private_key) :: {atom, String.t}
   def decrypt(cipher_msg, private_key) do
-    {:ok, cipher_bytes} = Base.url_decode64(cipher_msg)
+    {:ok, cipher_bytes} = Base.decode64(cipher_msg)
     {:ok, priv_key} = loads(private_key)
     {:ok, priv_key_seq} = RSAPrivateKey.as_sequence(priv_key)
     {:ok, :public_key.decrypt_private(cipher_bytes, priv_key_seq)}
@@ -148,10 +148,10 @@ defmodule RsaEx do
     end
   end
 
-  defp url_encode64({:ok, bytes_to_encode}) do
-    url_encode64(bytes_to_encode)
+  defp encode64({:ok, bytes_to_encode}) do
+    encode64(bytes_to_encode)
   end
   defp url_encode64(bytes_to_encode) do
-    {:ok, Base.url_encode64(bytes_to_encode)}
+    {:ok, Base.encode64(bytes_to_encode)}
   end
 end
