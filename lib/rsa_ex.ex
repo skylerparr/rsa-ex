@@ -151,7 +151,7 @@ defmodule RsaEx do
   defp encode64({:ok, bytes_to_encode}) do
     encode64(bytes_to_encode)
   end
-  defp url_encode64(bytes_to_encode) do
+  defp encode64(bytes_to_encode) do
     {:ok, Base.encode64(bytes_to_encode)}
   end
 end
